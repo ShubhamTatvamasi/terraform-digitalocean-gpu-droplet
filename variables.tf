@@ -6,19 +6,14 @@ variable "project_name" {
 
 variable "region" {
   type        = string
-  description = "Region (GPU droplets are only available in some regions)"
+  description = "Region (GPU sizes are only offered in some regions, check before changing)"
   default     = "tor1"
-
-  validation {
-    condition     = contains(["nyc2", "tor1", "atl1", "ams3"], var.region)
-    error_message = "GPU droplets are only available in nyc2, tor1, atl1 or ams3."
-  }
 }
 
 variable "droplet_size" {
   type        = string
   description = "GPU droplet size slug (see `doctl compute size list | grep gpu`)"
-  default     = "gpu-rtx4000x1-20gb"
+  default     = "gpu-4000adax1-20gb"
 
   validation {
     condition     = startswith(var.droplet_size, "gpu-")
@@ -32,15 +27,9 @@ variable "droplet_image" {
   default     = "ubuntu-26-04-x64"
 }
 
-variable "ssh_key_name" {
-  type        = string
-  description = "Name of an SSH key already on the DigitalOcean account to reuse. If null, ssh_public_key_file is uploaded."
-  default     = null
-}
-
 variable "ssh_public_key_file" {
   type        = string
-  description = "Path to the SSH public key added to the droplet"
+  description = "Path to the SSH public key added to the droplet (reused if already on the account)"
   default     = "~/.ssh/id_ed25519.pub"
 }
 

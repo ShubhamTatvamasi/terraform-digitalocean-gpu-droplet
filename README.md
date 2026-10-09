@@ -24,9 +24,8 @@ Create a GPU droplet (defaults: 1x RTX 4000 Ada on Ubuntu 26.04 LTS in `tor1`):
 ```bash
 # Optional overrides
 export TF_VAR_region=tor1
-export TF_VAR_droplet_size=gpu-rtx4000x1-20gb
+export TF_VAR_droplet_size=gpu-4000adax1-20gb
 export TF_VAR_droplet_image=ubuntu-26-04-x64
-export TF_VAR_ssh_key_name=my-laptop  # reuse a key already on the account (see `doctl compute ssh-key list`)
 export TF_VAR_allowed_cidrs='["'$(curl -s https://ifconfig.me)'/32"]'  # restrict inbound to your IP
 
 terraform apply
@@ -39,20 +38,11 @@ The OS is set by `droplet_image`:
 - `gpu-h100x1-base` / `gpu-h100x8-base`: DigitalOcean's "AI/ML Ready" image, with NVIDIA drivers and CUDA already installed.
 - `gpu-amd-base`: AI/ML Ready image for the AMD MI300X with ROCm.
 
-Available GPU sizes and AI/ML Ready images:
-| GPU | Size | AI/ML Ready image |
-| --- | --- | --- |
-| 1x NVIDIA H100 | `gpu-h100x1-80gb` | `gpu-h100x1-base` |
-| 8x NVIDIA H100 | `gpu-h100x8-640gb` | `gpu-h100x8-base` |
-| 1x NVIDIA L40S | `gpu-l40sx1-48gb` | `gpu-h100x1-base` |
-| 1x NVIDIA RTX 4000 Ada | `gpu-rtx4000x1-20gb` | `gpu-h100x1-base` |
-| 1x NVIDIA RTX 6000 Ada | `gpu-rtx6000adax1-48gb` | `gpu-h100x1-base` |
-| 1x AMD MI300X | `gpu-mi300x1-192gb` | `gpu-amd-base` |
-
-Check availability for your account:
+Check which GPU sizes your account can use and in which regions (slugs and regions change often; the size slug must match exactly, e.g. RTX 4000 Ada is `gpu-4000adax1-20gb`):
 ```bash
 doctl compute size list | grep gpu
-doctl compute image list-distribution --public | grep gpu
+doctl compute region list
+doctl compute image list-distribution --public | grep -E "gpu|ubuntu"
 ```
 
 Update terraform state file:
