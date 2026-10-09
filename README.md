@@ -26,6 +26,7 @@ Create a GPU droplet (defaults: 1x RTX 4000 Ada on Ubuntu 26.04 LTS in `tor1`):
 export TF_VAR_region=tor1
 export TF_VAR_droplet_size=gpu-rtx4000x1-20gb
 export TF_VAR_droplet_image=ubuntu-26-04-x64
+export TF_VAR_ssh_key_name=my-laptop  # reuse a key already on the account (see `doctl compute ssh-key list`)
 export TF_VAR_allowed_cidrs='["'$(curl -s https://ifconfig.me)'/32"]'  # restrict inbound to your IP
 
 terraform apply

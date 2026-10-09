@@ -32,6 +32,12 @@ variable "droplet_image" {
   default     = "ubuntu-26-04-x64"
 }
 
+variable "ssh_key_name" {
+  type        = string
+  description = "Name of an SSH key already on the DigitalOcean account to reuse. If null, ssh_public_key_file is uploaded."
+  default     = null
+}
+
 variable "ssh_public_key_file" {
   type        = string
   description = "Path to the SSH public key added to the droplet"
