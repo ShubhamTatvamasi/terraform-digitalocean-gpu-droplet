@@ -13,8 +13,8 @@ variable "region" {
 variable "droplet_size" {
   type        = string
   description = "GPU droplet size slug (see `doctl compute size list | grep gpu`)"
-  default     = "gpu-4000adax1-20gb"
-  # default = "gpu-6000adax1-48gb"
+  # default     = "gpu-4000adax1-20gb"
+  default = "gpu-6000adax1-48gb"
 
   validation {
     condition     = startswith(var.droplet_size, "gpu-")
