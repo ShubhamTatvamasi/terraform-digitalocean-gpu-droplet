@@ -1,4 +1,4 @@
-resource "digitalocean_firewall" "gpu_fw" {
+resource "digitalocean_firewall" "gpu" {
   name        = "${var.project_name}-firewall"
   droplet_ids = [digitalocean_droplet.gpu.id]
 
@@ -7,7 +7,7 @@ resource "digitalocean_firewall" "gpu_fw" {
     content {
       protocol         = "tcp"
       port_range       = tostring(inbound_rule.value)
-      source_addresses = ["0.0.0.0/0", "::/0"]
+      source_addresses = var.allowed_cidrs
     }
   }
 
